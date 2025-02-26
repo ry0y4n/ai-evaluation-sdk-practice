@@ -3,7 +3,8 @@ import pandas as pd
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 from azure.ai.evaluation import GroundednessEvaluator, CoherenceEvaluator, FluencyEvaluator, RelevanceEvaluator, SimilarityEvaluator
-# from customEvaluator.answer_length import AnswerLengthEvaluator
+from customEvaluator.codeBase.answer_length import AnswerLengthEvaluator
+from customEvaluator.promptBase.friendliness import FriendlinessEvaluator
 
 
 load_dotenv(verbose=True)
@@ -74,6 +75,11 @@ print(similarity_score)
 # answer_length = answer_length_evaluator(answer=query_response["response"])
 # print(answer_length)
 
+# # evaluatorにresponseを渡してfriendlinessを評価
+# friendliness_eval = FriendlinessEvaluator(model_config)
+# friendliness_score = friendliness_eval(response=query_response["response"])
+# print(friendliness_score)
+
 # 結果をリストにまとめて DataFrame に変換
 results = [
     {
@@ -110,6 +116,12 @@ results = [
     #     "Evaluator": "Answer Length",
     #     "Score": answer_length.get("answer_length"),
     #     "Reason": ""
+    # },
+    # {
+    #     "Evaluator": "Friendliness",
+    #     "Score": friendliness_score.get("friendliness"),
+    #     # "GPT Score": friendliness_score.get("gpt_friendliness"),
+    #     "Reason": friendliness_score.get("friendliness_reason")
     # }
 ]
 
