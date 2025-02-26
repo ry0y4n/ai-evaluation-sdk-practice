@@ -3,6 +3,7 @@ import pandas as pd
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 from azure.ai.evaluation import GroundednessEvaluator, CoherenceEvaluator, FluencyEvaluator, RelevanceEvaluator, SimilarityEvaluator
+# from customEvaluator.answer_length import AnswerLengthEvaluator
 
 
 load_dotenv(verbose=True)
@@ -68,6 +69,11 @@ similarity_score = similarity_eval(
 )
 print(similarity_score)
 
+# # evaluatorにresponseを渡してanswer_lengthを評価
+# answer_length_evaluator = AnswerLengthEvaluator()
+# answer_length = answer_length_evaluator(answer=query_response["response"])
+# print(answer_length)
+
 # 結果をリストにまとめて DataFrame に変換
 results = [
     {
@@ -99,7 +105,12 @@ results = [
         "Score": similarity_score.get("similarity"),
         # "GPT Score": similarity_score.get("gpt_similarity"),
         "Reason": ""
-    }
+    },
+    # {
+    #     "Evaluator": "Answer Length",
+    #     "Score": answer_length.get("answer_length"),
+    #     "Reason": ""
+    # }
 ]
 
 df = pd.DataFrame(results)
