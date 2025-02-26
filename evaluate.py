@@ -8,7 +8,7 @@ from azure.ai.evaluation import GroundednessEvaluator, CoherenceEvaluator, Fluen
 
 load_dotenv(verbose=True)
 
-credential = DefaultAzureCredential()
+# credential = DefaultAzureCredential()
 
 model_config = {
     "azure_endpoint": os.environ.get("AZURE_OPENAI_ENDPOINT"),
